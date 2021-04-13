@@ -18,7 +18,7 @@ class kPage():
     URL = 'https://www.k-online.de/vis/v1/de/search?oid=102636&lang=1&_query=&'\
         'f_type=profile&f_country=IT&_sort=alpha_asc'
     CLASS_NAME = 'searchresult-item'
-    SCROLL_PAUSE_TIME = 1.
+    SCROLL_PAUSE_TIME = 1.5
     #TAG = 'media__body searchresult-box__media__body one-whole'
     
     
@@ -86,7 +86,7 @@ class kPage():
         for i, sr in enumerate(srList):
             name.append(sr.find_element(By.TAG_NAME, 'h3').text)
             location.append(sr.find_element(By.TAG_NAME, 'h5').text)
-            'html body div#site-wrapper.vis-page-wrapper.page-wrapper div.inner-wrap.inner-wrap--padding div.page.page--padding.search.push--top div.search__item--results div#vis-search-scroll-area div.searchresult-list div.searchresult-item.searchresult-item--premium div.list-tag-labels.flex.flex--align-end div.flex__item.flex__item--grow'
+            
             try:
                 tags.append(sr.find_element(By.CLASS_NAME,
                     'flex__item--grow').find_element(By.TAG_NAME, 'span').text)
@@ -108,7 +108,7 @@ class kPage():
             f.write('\Company,location,province,tag')
             for n, loc, tag in zip(name, location, tags):
                 line = n+','
-                l = loc.split('(')
+                l = loc.replace(', Italien', '').split('(')
                 if len(l) != 1:
                     line+=l[0].replace(' ', '')+','
                     ID=l[-1].replace(')', '')+','
